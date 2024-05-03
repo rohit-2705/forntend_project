@@ -1,0 +1,47 @@
+.active{
+    background-color: #5153ecee;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #06089ae0;
+    position: sticky;
+    z-index: 3;
+    top:0;
+}
+
+nav .title{
+    font-size: 1.5rem;
+    margin: 1rem;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+    color:bisque;
+}
+
+nav ul{
+    display: flex;
+    font-weight: bold;
+    font-style: italic;
+}
+
+nav ul li{
+    list-style: none;
+   
+}
+
+nav ul li a{
+    
+    display: block;
+    text-decoration: none;
+    color:white;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+nav ul li a:not(.active):hover{
+    background-color: #120f51d6;
+}

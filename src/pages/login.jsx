@@ -1,50 +1,49 @@
 import React from 'react';
+import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRef} from 'react';
-import { useAuthContext } from '../Context/Authcontext';
+import { showToast } from '../assets/toasts';
 
-export default function login() {
-  const { setIsLoggedIn = () => {} } = useAuthContext();
-  const navigator = useNavigate();
+
+
+export default function Login() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const navigator = useNavigate();
 
   function handleLogin(e) {
     e.preventDefault();
-
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-
-    if (email && password) {
-      fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
+    
+    if(email.length > 0 && password.length > 0) {
+      fetch("http://localhost:5000/api/auth/login",{
+        method:"POST",
+        body:JSON.stringify({
           email,
           password,
         }),
+        headers:{
+          "content-Type": "application/json",
+          "x-Token":sessionStorage.getItem("x-token"),
+
+        },
       })
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.success) {
-            try {
-              if (result.token) {
-                sessionStorage.setItem("_tk", result.token);
-                setIsLoggedIn(true);
-                navigator("/home");
-              } else {
-                throw new Error("Token missing!");
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          }
+        .then((response) => {
+          return response.json();
         })
-        .catch((error) => console.log(error));
-    } else {
-      alert("Email and Password is required to signin");
+         .then((result) => {
+           if (result.success && result.token){
+            sessionStorage.setItem("x-token", result.token);
+            navigator("/home");
+           }else{
+            showToast(result.message);
+           }
+         })
+           .catch((error) => {
+            showToast(error,"error");
+           });
+    }else{
+      showToast("Email or Password is required", "warning");
     }
   }
   return (
@@ -55,27 +54,28 @@ export default function login() {
           }}
         >
         <div className="card-body">
+        <h3 className="mb-3">Login</h3>
         <div className="mb-3">
-        <label htmlFor="email" class="form-label">
+        <label htmlFor="email" className="form-label">
           Email address
         </label>
         <input
          type="email" 
-         class="form-control" 
+         className="form-control" 
          id="email" 
+         ref={emailRef} 
          placeholder="name@example.com"/>
-         ref={emailRef}
         </div>
         <div className="mb-3">
-        <label htmlFor="password" class="form-label">
+        <label htmlFor="password" className="form-label">
           Password
         </label>
         <input
          type="password" 
-         class="form-control" 
+         className="form-control"
+         ref={passwordRef}  
          id="password" 
          placeholder="**********"/>
-         ref={passwordRef}
         </div>
         <div>
           <p className="text-center">
@@ -85,8 +85,8 @@ export default function login() {
             </span>
           </p>
         </div>
-        <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="button"
+        <div className="d-grid gap-2">
+        <button className="btn btn-primary" type="button"
         onClick={handleLogin}>
           login
         </button>
@@ -102,5 +102,6 @@ export default function login() {
       </div>
     </div>
   </div>
-  );
+  )
 }
+
