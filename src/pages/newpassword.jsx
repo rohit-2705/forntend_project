@@ -20,7 +20,7 @@ export default function Newpassword() {
       newPass === confirmPass &&
       searchQuery.get("userId")
     ) {
-      fetch("http://localhost:5000/api/auth/newpassword",searchQuery.get("userId"),
+      fetch("https://backend-project-1-mhlp.onrender.com/api/auth/newpassword",searchQuery.get("userId"),
         {
           method: "PATCH",
           headers: {
@@ -36,7 +36,7 @@ export default function Newpassword() {
             navigator("/login");
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error))
     } else {
       alert("Password is invalid");
     }

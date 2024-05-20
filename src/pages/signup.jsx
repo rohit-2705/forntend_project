@@ -18,7 +18,7 @@ export default function Signup() {
     const phonenumber = phonenumberRef.current.value;
 
     if(username.length > 0 && email.length > 0 && password.length > 0 && phonenumber.length > 0<=10 ){
-      fetch("http://localhost:5000/api/auth/create",{
+      fetch("https://backend-project-1-mhlp.onrender.com/api/auth/create",{
         method:"POST",
         body:JSON.stringify({
           username,
@@ -35,7 +35,7 @@ export default function Signup() {
         })
           .then((result) =>{
             if (result.success){
-              navigator("/login");
+              navigator("/");
             }else{
               showToast(result.message);
             }

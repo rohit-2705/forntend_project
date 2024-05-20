@@ -9,14 +9,15 @@ export default function Login() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigator = useNavigate();
-
+  
   function handleLogin(e) {
+    console.log("login");
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     
-    if(email.length > 0 && password.length > 0) {
-      fetch("http://localhost:5000/api/auth/login",{
+    if(email && password) {
+      fetch("https://backend-project-1-mhlp.onrender.com/api/auth/login",{
         method:"POST",
         body:JSON.stringify({
           email,
@@ -25,6 +26,7 @@ export default function Login() {
         headers:{
           "content-Type": "application/json",
           "x-Token":sessionStorage.getItem("x-token"),
+         
 
         },
       })

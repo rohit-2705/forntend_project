@@ -21,7 +21,7 @@ export default function Createrecipe() {
    
 
     if(recipename.length > 0 && ingredients.length > 0 && description.length> 0 && instructions.length > 0 && imageurl.length > 0){
-      fetch("http://localhost:5000/api/recipe/recipecreate", {
+      fetch("https://backend-project-1-mhlp.onrender.com/api/recipe/recipecreate", {
         method:"POST",
         body:JSON.stringify({
           recipename,
@@ -40,7 +40,7 @@ export default function Createrecipe() {
        })
         .then((data) => {
           if(data.result.success){
-            navigator("/");
+            navigator("/home");
           }else{
             showToast(result.message);
           }

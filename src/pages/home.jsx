@@ -10,7 +10,7 @@ export default function Home() {
 
   const getrecipes = async() =>{
   try{
-    const response = await  fetch("http://localhost:5000/api/recipe/getrecipe",{
+    const response = await  fetch("https://backend-project-1-mhlp.onrender.com/api/recipe/getrecipe",{
      method:"GET",
      headers:{
      "content-Type":"application/JSON",

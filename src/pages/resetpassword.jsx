@@ -14,7 +14,7 @@ export default function Resetpassword() {
     const email = emailRef.current.value;
 
     if (email) {
-      fetch("http://localhost:5000/api/auth/forgetpassword",{
+      fetch("https://backend-project-1-mhlp.onrender.com/api/auth/forgetpassword",{
         method:"POST",
         headers:{
           "content-Type":"application/json",
